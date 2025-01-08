@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List All Mangas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Manga Manager</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/add-manga">Add Manga</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/list-all">List All</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h2>All Mangas</h2>
+        <div class="row">
+            {% for manga in mangas %}
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <img src="{{ manga['cover'] }}" class="card-img-top" alt="{{ manga['title'] }}">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="{{ manga['url'] }}" target="_blank" class="text-decoration-none">
+                                {{ manga['title'] }}
+                            </a>
+                        </h5>
+                        {% if manga['trama'] is none %}
+                            <p class="card-text">Trama not available...</p>
+                        {% else %}
+                            <p class="card-text">{{ manga['trama'][:100] }}...</p>
+                        {% endif %}
+                        <p>
+                            {% if manga['availability'] == "Yes" %}
+                                <strong>Price:</strong> €{{ manga['price'] }}
+                            {% else %}
+                                <span class="text-danger">Not Available</span>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

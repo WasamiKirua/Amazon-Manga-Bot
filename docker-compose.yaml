@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  mysql:
+    container_name: mysql
+    image: mysql
+    #restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example # This MUST match the passwd in your .env file
+      MYSQL_DATABASE: mangas
+    ports:
+      - "3306:3306"  # Expose MySQL port
+    volumes:
+      - ./mysql_data:/var/lib/mysql  # Persistent storage for MySQL
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 7
+
+  selenium-scraper:
+    container_name: selenium
+    image: selenium/standalone-firefox:latest
+    ports:
+      - "4444:4444"  # Expose Selenium server's default port
+      - "7900:7900"  # Additional port for noVNC (browser view of Selenium session)
+    environment:
+      - SE_VNC_NO_PASSWORD=1
+      #- SE_VNC_PASSWORD=Your_Password_here
+    privileged: true  # Allow container to access the necessary capabilities for Selenium
+    shm_size: "2g"  # Increase shared memory size to 2GB
+  
+  fastapi:
+    container_name: fastapi
+    #restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile-fastapi  # Build from Dockerfile-flask
+    ports:
+      - "5001:5001"  # Expose the web application on port 8080
+    volumes:
+    - ./src:/app/src
+    - ./logs:/app/logs
+    depends_on:
+      mysql:
+        condition: service_healthy
+

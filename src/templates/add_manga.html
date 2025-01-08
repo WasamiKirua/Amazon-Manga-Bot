@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Manga</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom Styles (optional) -->
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Manga Manager</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/add-manga">Add Manga</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/list-all">List All</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <h2>Add Manga</h2>
+        <form method="post" action="/add-manga">
+            <div class="mb-3">
+                <label for="manga_urls" class="form-label">Manga URLs (one per line)</label>
+                <textarea class="form-control" id="manga_urls" name="manga_urls" rows="5" placeholder="Enter one or more manga URLs, each on a new line"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        <!-- Display submitted URLs (for debugging purposes) -->
+        {% if submitted_urls %}
+            <h3 class="mt-4">Submitted URLs:</h3>
+            <ul>
+                {% for url in submitted_urls %}
+                    <li>{{ url }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <!-- Display a success message if URLs were submitted -->
+        {% if message %}
+            <div class="alert alert-success mt-4">{{ message }}</div>
+        {% endif %}
+    </div>
+
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
