@@ -1,8 +1,3 @@
-Here's an improved and polished version of your `README.md`:
-
-```markdown
-# Python Selenium Scraper
-
 ## Description
 
 This repository contains a Python-based scraper that leverages Selenium for automated manga tracking. It runs within a Dockerized environment comprising three containers:
@@ -135,7 +130,6 @@ This project is licensed under the [MIT License](https://choosealicense.com/lice
 ## Have Fun!
 
 Enjoy managing your manga scraper efficiently and effortlessly.
-```
 
 ### Improvements:
 1. **Structure:** Organized content into clear sections with headings.
